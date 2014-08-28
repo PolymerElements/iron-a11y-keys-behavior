@@ -1,0 +1,11 @@
+{
+  "name": "core-a11y-keys",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
