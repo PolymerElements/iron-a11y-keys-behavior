@@ -1,6 +1,9 @@
 {
   "name": "core-a11y-keys",
   "private": true,
+  "dependencies": {
+    "Polymer": "Polymer/polymer#master"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
