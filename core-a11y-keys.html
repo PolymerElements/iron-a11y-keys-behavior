@@ -275,9 +275,27 @@ Keys Syntax Grammar:
       }
     }
 
+    function listen(node, handler) {
+      if (node && node.addEventListener) {
+        node.addEventListener('keydown', handler);
+      }
+    }
+
+    function unlisten(node, handler) {
+      if (node && node.removeEventListener) {
+        node.removeEventListener('keydown', handler);
+      }
+    }
+
     Polymer('core-a11y-keys', {
       created: function() {
         this._keyHandler = processKeys.bind(this);
+      },
+      attached: function() {
+        listen(this.target, this._keyHandler);
+      },
+      detached: function() {
+        unlisten(this.target, this._keyHandler);
       },
       publish: {
         /**
@@ -297,18 +315,14 @@ Keys Syntax Grammar:
          */
         target: null
       },
-      keysChanged: function(){
+      keysChanged: function() {
         // * can have multiple mappings: shift+8, * on numpad or Multiply on numpad
         var normalized = this.keys.replace('*', '* shift+*');
         this._desiredKeys = normalized.toLowerCase().split(' ').map(stringToKey);
       },
       targetChanged: function(oldTarget) {
-        if (oldTarget && oldTarget.removeEventListener) {
-          oldTarget.removeEventListener('keydown', this._keyHandler);
-        }
-        if (this.target && this.target.addEventListener) {
-          this.target.addEventListener('keydown', this._keyHandler);
-        }
+        unlisten(oldTarget, this._keyHandler);
+        listen(this.target, this._keyHandler);
       }
     });
   })();
