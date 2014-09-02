@@ -269,7 +269,7 @@ Keys Syntax Grammar:
         if (keyMatches(dk, current)) {
           ev.preventDefault();
           ev.stopPropagation();
-          this.fire('key-pressed', current);
+          this.fire('keys-pressed', current, this, false);
           break;
         }
       }
