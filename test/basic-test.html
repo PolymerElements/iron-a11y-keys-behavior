@@ -1,0 +1,50 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>core-a11y-keys</title>
+
+  <script src="../../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../core-a11y-keys.html">
+</head>
+<body>
+
+  <!-- You use the document as a place to set up your fixtures. -->
+  <core-a11y-keys></core-a11y-keys>
+
+  <script>
+    var el = document.querySelector('core-a11y-keys');
+
+    suite('<core-a11y-keys>', function() {
+
+      test('target is parentNode by default', function() {
+        assert.equal(el.target, el.parentNode);
+      });
+
+      test('keys attribute sets up _desiredKeys', function(done) {
+        el.keys = 'space';
+        async.nextTick(function() {
+          assert.isArray(el._desiredKeys);
+          assert.deepEqual(el._desiredKeys[0], {key: 'space'});
+          done();
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>
