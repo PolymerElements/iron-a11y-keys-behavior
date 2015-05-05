@@ -1,4 +1,3 @@
-core-a11y-keys
-==============
+iron-a11y-keys-behavior
+=======================
 
-See the [component page](https://www.polymer-project.org/0.5/docs/elements/core-a11y-keys.html) for more information.
