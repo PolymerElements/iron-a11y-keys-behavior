@@ -71,8 +71,9 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         'space': '_keyHandler'
       },
 
-      _keyHandler: function() {
+      _keyHandler: function(event) {
         this.keyCount++;
+        this.lastEvent = event;
       }
     });
 
@@ -192,6 +193,23 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       MockInteractions.pressSpace(keys);
       expect(keys.keyCount).to.be.equal(1);
     });
+
+    suite('matching keyboard events to keys', function() {
+      test('can be done imperatively', function() {
+        var event = new CustomEvent('keydown');
+        event.keyCode = 65;
+        expect(keys.keyboardEventMatchesKeys(event, 'a')).to.be.equal(true);
+      });
+
+      test('can be done with a provided keyboardEvent', function() {
+        var event;
+        MockInteractions.pressSpace(keys);
+        event = keys.lastEvent;
+
+        expect(event.detail.keyboardEvent).to.be.okay;
+        expect(keys.keyboardEventMatchesKeys(event, 'space')).to.be.equal(true);
+      });
+    });
   });
 
   suite('combo keys', function() {
@@ -240,6 +258,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       expect(keys.keyCount).to.be.equal(2);
     });
   });
+
 });
   </script>
 </body>

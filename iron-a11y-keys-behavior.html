@@ -219,6 +219,12 @@ The `keys-pressed` event will fire when one of the key combinations set with the
       });
     }
 
+    function parseEventString(eventString) {
+      return eventString.split(' ').map(function(keyComboString) {
+        return parseKeyComboString(keyComboString);
+      });
+    }
+
     Polymer.IronA11yKeysBehavior = {
       properties: {
         /**
@@ -284,14 +290,37 @@ The `keys-pressed` event will fire when one of the key combinations set with the
         this._resetKeyEventListeners();
       },
 
+      keyboardEventMatchesKeys: function(event, eventString) {
+        var keyCombos = parseEventString(eventString);
+        var index;
+
+        for (index = 0; index < keyCombos.length; ++index) {
+          if (keyComboMatchesEvent(keyCombos[index], event)) {
+            return true;
+          }
+        }
+
+        return false;
+      },
+
+      _collectKeyBindings: function() {
+        var keyBindings = this.behaviors.map(function(behavior) {
+          return behavior.keyBindings;
+        });
+
+        if (keyBindings.indexOf(this.keyBindings) === -1) {
+          keyBindings.push(this.keyBindings);
+        }
+
+        return keyBindings;
+      },
+
       _prepKeyBindings: function() {
         this._keyBindings = {};
 
-        this.behaviors.concat(this).forEach(function(node) {
-          if (node && node.keyBindings) {
-            for (var eventString in node.keyBindings) {
-              this._addKeyBinding(eventString, node.keyBindings[eventString]);
-            }
+        this._collectKeyBindings().forEach(function(keyBindings) {
+          for (var eventString in keyBindings) {
+            this._addKeyBinding(eventString, keyBindings[eventString]);
           }
         }, this);
 
@@ -301,9 +330,7 @@ The `keys-pressed` event will fire when one of the key combinations set with the
       },
 
       _addKeyBinding: function(eventString, handlerName) {
-        eventString.split(' ').forEach(function(keyComboString) {
-          var keyCombo = parseKeyComboString(keyComboString);
-
+        parseEventString(eventString).forEach(function(keyCombo) {
           this._keyBindings[keyCombo.event] =
             this._keyBindings[keyCombo.event] || [];
 
@@ -355,15 +382,18 @@ The `keys-pressed` event will fire when one of the key combinations set with the
           var keyCombo = keyBinding[0];
           var handlerName = keyBinding[1];
 
-          if (keyComboMatchesEvent(keyCombo, event)) {
-            this._triggerKeyHandler(keyCombo, handlerName);
+          if (!event.defaultPrevented && keyComboMatchesEvent(keyCombo, event)) {
+            this._triggerKeyHandler(keyCombo, handlerName, event);
           }
         }, this);
       },
 
-      _triggerKeyHandler: function(keyCombo, handlerName) {
+      _triggerKeyHandler: function(keyCombo, handlerName, keyboardEvent) {
+        var detail = Object.create(keyCombo);
+        detail.keyboardEvent = keyboardEvent;
+
         this[handlerName].call(this, new CustomEvent(keyCombo.event, {
-          detail: Object.create(keyCombo)
+          detail: detail
         }));
       }
     };
