@@ -53,13 +53,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
   var keys;
 
   suiteSetup(function() {
-    Polymer({
-      is: 'x-a11y-basic-keys',
-
-      behaviors: [
-        Polymer.IronA11yKeysBehavior
-      ],
-
+    var KeysTestBehavior = [Polymer.IronA11yKeysBehavior, {
       properties: {
         keyCount: {
           type: Number,
@@ -67,13 +61,21 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         }
       },
 
-      keyBindings: {
-        'space': '_keyHandler'
-      },
-
       _keyHandler: function(event) {
         this.keyCount++;
         this.lastEvent = event;
+      }
+    }];
+
+    Polymer({
+      is: 'x-a11y-basic-keys',
+
+      behaviors: [
+        KeysTestBehavior
+      ],
+
+      keyBindings: {
+        'space': '_keyHandler'
       }
     });
 
@@ -81,22 +83,11 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       is: 'x-a11y-combo-keys',
 
       behaviors: [
-        Polymer.IronA11yKeysBehavior
+        KeysTestBehavior
       ],
-
-      properties: {
-        keyCount: {
-          type: Number,
-          value: 0
-        }
-      },
 
       keyBindings: {
         'ctrl+shift+a': '_keyHandler'
-      },
-
-      _keyHandler: function() {
-        this.keyCount++;
       }
     });
 
@@ -104,22 +95,11 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       is: 'x-a11y-alternate-event-keys',
 
       behaviors: [
-        Polymer.IronA11yKeysBehavior
+        KeysTestBehavior
       ],
-
-      properties: {
-        keyCount: {
-          type: Number,
-          value: 0
-        }
-      },
 
       keyBindings: {
         'space:keyup': '_keyHandler'
-      },
-
-      _keyHandler: function() {
-        this.keyCount++;
       }
     });
 
@@ -135,23 +115,12 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       is: 'x-a11y-behavior-keys',
 
       behaviors: [
-        Polymer.IronA11yKeysBehavior,
+        KeysTestBehavior,
         XA11yBehavior
       ],
 
-      properties: {
-        keyCount: {
-          type: Number,
-          value: 0
-        }
-      },
-
       keyBindings: {
         'space': '_keyHandler'
-      },
-
-      _keyHandler: function() {
-        this.keyCount++;
       }
     });
   });
@@ -208,6 +177,14 @@ suite('Polymer.IronA11yKeysBehavior', function() {
 
         expect(event.detail.keyboardEvent).to.be.okay;
         expect(keys.keyboardEventMatchesKeys(event, 'space')).to.be.equal(true);
+      });
+
+      test('can handle variations in arrow key names', function() {
+        var event = new CustomEvent('keydown');
+        event.key = 'up';
+        expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
+        event.key = 'ArrowUp';
+        expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
       });
     });
   });
