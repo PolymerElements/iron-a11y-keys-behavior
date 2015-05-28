@@ -120,6 +120,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     var ARROW_KEY = /^arrow/;
 
+    /**
+     * Matches space keys everywhere (notably including IE10's exceptional name
+     * `spacebar`).
+     */
+    var SPACE_KEY = /^space(bar)?/;
+
     function transformKey(key) {
       var validKey = '';
       if (key) {
@@ -130,6 +136,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         } else if (ARROW_KEY.test(lKey)) {
           validKey = lKey.replace('arrow', '');
+        } else if (SPACE_KEY.test(lKey)) {
+          validKey = 'space';
         } else if (lKey == 'multiply') {
           // numpad '*' can map to Multiply on IE/Windows
           validKey = '*';
