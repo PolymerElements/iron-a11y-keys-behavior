@@ -128,14 +128,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           validKey = 'f' + (keyCode - 112);
         } else if (keyCode >= 48 && keyCode <= 57) {
           // top 0-9 keys
-          validKey = String(48 - keyCode);
+          validKey = String(keyCode - 48);
         } else if (keyCode >= 96 && keyCode <= 105) {
           // num pad 0-9
-          validKey = String(96 - keyCode);
+          validKey = String(keyCode - 96);
         } else {
           validKey = KEY_CODE[keyCode];
         }
       }
+      
       return validKey;
     }
 
@@ -143,8 +144,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // fall back from .key, to .keyIdentifier, to .keyCode, and then to
       // .detail.key to support artificial keyboard events
       return transformKey(keyEvent.key) ||
-        transformKeyIdentifier(keyEvent.keyIdentifier) ||
         transformKeyCode(keyEvent.keyCode) ||
+        transformKeyIdentifier(keyEvent.keyIdentifier) ||
         transformKey(keyEvent.detail.key) || '';
     }
 
