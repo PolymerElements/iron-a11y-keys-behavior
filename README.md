@@ -7,6 +7,9 @@ iron-a11y-keys-behavior.html
 Edit those files, and our readme bot will duplicate them over here!
 Edit this file, and the bot will squash your changes :)
 
+The bot does some handling of markdown. Please file a bug if it does the wrong
+thing! https://github.com/PolymerLabs/tedium/issues
+
 -->
 
 [![Build Status](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior)
@@ -15,7 +18,6 @@ _[Demo and API Docs](https://elements.polymer-project.org/elements/iron-a11y-key
 
 
 ##Polymer.IronA11yKeysBehavior
-
 
 `Polymer.IronA11yKeysBehavior` provides a normalized interface for processing
 keyboard commands that pertain to [WAI-ARIA best practices](http://www.w3.org/TR/wai-aria-practices/#kbd_general_binding).
