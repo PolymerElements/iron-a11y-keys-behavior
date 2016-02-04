@@ -12,9 +12,9 @@ thing! https://github.com/PolymerLabs/tedium/issues
 
 -->
 
-[![Build Status](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior)
+[![Build status](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-a11y-keys-behavior)
 
-_[Demo and API Docs](https://elements.polymer-project.org/elements/iron-a11y-keys-behavior)_
+_[Demo and API docs](https://elements.polymer-project.org/elements/iron-a11y-keys-behavior)_
 
 
 ##Polymer.IronA11yKeysBehavior
