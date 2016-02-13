@@ -273,6 +273,20 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
       });
     });
+
+    suite('matching keyboard events to top row and number pad digit keys', function() {
+      test('top row can be done imperatively', function() {
+        var event = new CustomEvent('keydown');
+        event.keyCode = 49;
+        expect(keys.keyboardEventMatchesKeys(event, '1')).to.be.equal(true);
+      });
+
+      test('number pad digits can be done imperatively', function() {
+        var event = new CustomEvent('keydown');
+        event.keyCode = 97;
+        expect(keys.keyboardEventMatchesKeys(event, '1')).to.be.equal(true);
+      });
+    });
   });
 
   suite('combo keys', function() {
