@@ -91,6 +91,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var SPACE_KEY = /^space(bar)?/;
 
     /**
+     * Matches ESC key.
+     *
+     * Value from: http://w3c.github.io/uievents-key/#key-Escape
+     */
+    var ESC_KEY = /^escape$/;
+
+    /**
      * Transforms the key.
      * @param {string} key The KeyBoardEvent.key
      * @param {Boolean} [noSpecialChars] Limits the transformation to
@@ -102,6 +109,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var lKey = key.toLowerCase();
         if (lKey === ' ' || SPACE_KEY.test(lKey)) {
           validKey = 'space';
+        } else if (ESC_KEY.test(lKey)) {
+          validKey = 'esc';
         } else if (lKey.length == 1) {
           if (!noSpecialChars || KEY_CHAR.test(lKey)) {
             validKey = lKey;
