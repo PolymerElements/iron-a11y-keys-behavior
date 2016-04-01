@@ -98,7 +98,8 @@ suite('Polymer.IronA11yKeysBehavior', function() {
 
       keyBindings: {
         'space': '_keyHandler',
-        '@': '_keyHandler'
+        '@': '_keyHandler',
+        'esc': '_keyHandler'
       }
     });
 
@@ -170,6 +171,15 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       MockInteractions.pressSpace(keys);
 
       expect(keys.keyCount).to.be.equal(1);
+
+      MockInteractions.pressAndReleaseKeyOn(keys, 27, [], 'Esc');
+      expect(keys.keyCount).to.be.equal(2);
+
+      MockInteractions.pressAndReleaseKeyOn(keys, 27, [], 'Escape');
+      expect(keys.keyCount).to.be.equal(3);
+
+      MockInteractions.pressAndReleaseKeyOn(keys, 27, []);
+      expect(keys.keyCount).to.be.equal(4);
     });
 
     test('trigger the handler when the specified key is pressed together with a modifier', function() {
