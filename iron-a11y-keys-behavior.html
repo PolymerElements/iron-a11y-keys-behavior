@@ -212,6 +212,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (keyName in MODIFIER_KEYS) {
           parsedKeyCombo[MODIFIER_KEYS[keyName]] = true;
           parsedKeyCombo.hasModifiers = true;
+        } else if (keyName === "only"){
+          parsedKeyCombo.hasModifiers = true;
         } else {
           parsedKeyCombo.key = keyName;
           parsedKeyCombo.event = event || 'keydown';
