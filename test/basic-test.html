@@ -58,12 +58,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
-  <test-fixture id="NoIronA11yKeysBehavior">
-    <template>
-      <div></div>
-    </template>
-  </test-fixture>
-
   <script>
 suite('Polymer.IronA11yKeysBehavior', function() {
   var keys;
@@ -438,14 +432,11 @@ suite('Polymer.IronA11yKeysBehavior', function() {
   });
 
   suite('remove key behavior with null target', function () {
-    setup(function () {
-      container = fixture('NoIronA11yKeysBehavior');
-    });
-    test('add and remove a iron-a11y-keys-behavior', function (done) {
+    test('add and remove a iron-a11y-keys-behavior', function () {
       var element = document.createElement('x-a11y-basic-keys');
       element.keyEventTarget = null;
-      Polymer.dom(container).appendChild(element);
-      done();
+      document.body.appendChild(element);
+      document.body.removeChild(element);
     });
   });
 
