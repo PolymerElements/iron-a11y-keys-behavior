@@ -179,8 +179,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Fall back from .key, to .keyIdentifier, to .keyCode, and then to
       // .detail.key to support artificial keyboard events.
       return transformKey(keyEvent.key, noSpecialChars) ||
-        transformKeyIdentifier(keyEvent.keyIdentifier) ||
         transformKeyCode(keyEvent.keyCode) ||
+        transformKeyIdentifier(keyEvent.keyIdentifier) ||
         transformKey(keyEvent.detail ? keyEvent.detail.key : keyEvent.detail, noSpecialChars) || '';
     }
 
