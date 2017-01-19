@@ -292,6 +292,14 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         event.key = 'ArrowUp';
         expect(keys.keyboardEventMatchesKeys(event, 'up')).to.be.equal(true);
       });
+
+      test('can handle function keys', function() {
+        var event = new CustomEvent('keydown');
+        event.keyCode = 112;
+        expect(keys.keyboardEventMatchesKeys(event, 'f1')).to.be.equal(true);
+        event.keyCode = 123;
+        expect(keys.keyboardEventMatchesKeys(event, 'f12')).to.be.equal(true);
+      });
     });
 
     suite('matching keyboard events to top row and number pad digit keys', function() {
