@@ -63,6 +63,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
   var keys;
 
   suiteSetup(function() {
+    /** @polymerBehavior */
     var KeysTestBehavior = [Polymer.IronA11yKeysBehavior, {
       properties: {
         keyCount: {
@@ -128,6 +129,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       }
     });
 
+    /** @polymerBehavior */
     var XA11yBehavior = {
       keyBindings: {
         'enter': '_keyHandler'
