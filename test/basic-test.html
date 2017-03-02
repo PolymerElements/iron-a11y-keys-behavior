@@ -357,7 +357,6 @@ suite('Polymer.IronA11yKeysBehavior', function() {
       var enterSpy = sinon.spy(keys, '_keyHandler2');
       var shiftEnterSpy = sinon.spy(keys, '_keyHandler');
       var event = new CustomEvent('keydown');
-      var event = new CustomEvent('keydown');
       // Combo `shift+enter`.
       event.shiftKey = true;
       event.keyCode = event.code = 13;
