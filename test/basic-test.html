@@ -256,6 +256,12 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         expect(keys.keyboardEventMatchesKeys(event, '+')).to.be.equal(true);
       });
 
+      test('knows that `Add` is the same as `+`', function() {
+        var event = new CustomEvent('keydown');
+        event.key = 'Add';
+        expect(keys.keyboardEventMatchesKeys(event, '+')).to.be.equal(true);
+      });
+
       test('handles `:`', function() {
         var event = new CustomEvent('keydown');
         event.key = ':';
@@ -350,6 +356,7 @@ suite('Polymer.IronA11yKeysBehavior', function() {
     test('give precendence to combos with modifiers', function() {
       var enterSpy = sinon.spy(keys, '_keyHandler2');
       var shiftEnterSpy = sinon.spy(keys, '_keyHandler');
+      var event = new CustomEvent('keydown');
       var event = new CustomEvent('keydown');
       // Combo `shift+enter`.
       event.shiftKey = true;
