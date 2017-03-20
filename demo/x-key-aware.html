@@ -8,8 +8,8 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../iron-a11y-keys-behavior.html">
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../iron-a11y-keys-mixin.html">
 
 <dom-module id="x-key-aware">
   <template>
@@ -48,49 +48,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <script>
-  Polymer({
-    is: 'x-key-aware',
+(function() {
+  'use strict';
+  /** @polymerElement */
+  class XKeyAware extends Polymer.IronA11yKeysMixin(Polymer.Element) {
+    static get is() { return 'x-key-aware'; }
 
-    behaviors: [
-      Polymer.IronA11yKeysBehavior
-    ],
+    static get properties() {
+      return {
+        pressed: {
+          type: String,
+          readOnly: true,
+          value: ''
+        },
 
-    properties: {
-      pressed: {
-        type: String,
-        readOnly: true,
-        value: ''
-      },
+        boundKeys: {
+          type: Array,
+          value: function() {
+            return Object.keys(XKeyAware.keyBindings).join(' ').split(' ');
+          }
+        },
 
-      boundKeys: {
-        type: Array,
-        value: function() {
-          return Object.keys(this.keyBindings).join(' ').split(' ');
+        preventDefault: {
+          type: Boolean,
+          value: true,
+          notify: true
+        },
+
+        keyEventTarget: {
+          type: Object,
+          value: function() {
+            return document.body;
+          }
         }
-      },
+      };
+    }
 
-      preventDefault: {
-        type: Boolean,
-        value: true,
-        notify: true
-      },
+    static get keyBindings() {
+      return {
+        '* pageup pagedown left right down up home end space enter @ ~ " $ ? ! \\ + : # backspace': '_updatePressed',
+        'a': '_updatePressed',
+        'shift+a alt+a': '_updatePressed',
+        'shift+tab shift+space': '_updatePressed'
+      };
+    }
 
-      keyEventTarget: {
-        type: Object,
-        value: function() {
-          return document.body;
-        }
-      }
-    },
-
-    keyBindings: {
-      '* pageup pagedown left right down up home end space enter @ ~ " $ ? ! \\ + : # backspace': '_updatePressed',
-      'a': '_updatePressed',
-      'shift+a alt+a': '_updatePressed',
-      'shift+tab shift+space': '_updatePressed'
-    },
-
-    _updatePressed: function(event) {
+    _updatePressed(event) {
       console.log(event.detail);
 
       if (this.preventDefault) {
@@ -100,5 +103,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.pressed + event.detail.combo + ' pressed!\n'
       );
     }
-  });
+  }
+
+  window.customElements.define(XKeyAware.is, XKeyAware);
+})();
 </script>

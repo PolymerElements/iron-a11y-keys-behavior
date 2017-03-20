@@ -8,22 +8,20 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="iron-a11y-keys-base.html">
 
 <script>
   (function() {
     'use strict';
 
-    let BaseMixin = Polymer.IronA11yKeysBaseMixin(Object);
-
     /**
-     * `Polymer.IronA11yKeysBehavior` provides a normalized interface for processing
+     * `Polymer.IronA11yKeysMixin` provides a normalized interface for processing
      * keyboard commands that pertain to [WAI-ARIA best practices](http://www.w3.org/TR/wai-aria-practices/#kbd_general_binding).
      * The element takes care of browser differences with respect to Keyboard events
      * and uses an expressive syntax to filter key presses.
      *
-     * Use the `keyBindings` prototype property to express what combination of keys
+     * Use the `keyBindings` static property to express what combination of keys
      * will trigger the callback. A key binding has the format
      * `"KEY+MODIFIER:EVENT": "callback"` (`"KEY": "callback"` or
      * `"KEY:EVENT": "callback"` are valid as well). Some examples:
@@ -51,57 +49,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * for an example.
      *
      * @demo demo/index.html
-     * @polymerBehavior
+     * @polymerMixin
      */
-    Polymer.IronA11yKeysBehavior = {
-      properties: BaseMixin.properties,
-      observers: BaseMixin.observers,
-
-      /**
-       * To be used to express what combination of keys  will trigger the relative
-       * callback. e.g. `keyBindings: { 'esc': '_onEscPressed'}`
-       * @type {!Object}
-       */
-      keyBindings: {},
-
-      registered: function() {
-        this._prepKeyBindings();
-      },
-
-      attached: function() {
-        this._listenKeyEventListeners();
-      },
-
-      detached: function() {
-        this._unlistenKeyEventListeners();
-      },
-
-      _collectKeyBindings: function() {
-        var keyBindings = this.behaviors.map(function(behavior) {
-          return behavior.keyBindings;
-        });
-
-        if (keyBindings.indexOf(this.keyBindings) === -1) {
-          keyBindings.push(this.keyBindings);
+    Polymer.IronA11yKeysMixin = Polymer.dedupingMixin(function(superClass) {
+      return class extends Polymer.IronA11yKeysBaseMixin(superClass) {
+        static get properties() {
+          return {
+            _keyBindingsConnected: {
+              type: Boolean,
+              value: false
+            }
+          };
         }
 
-        return keyBindings;
-      },
+        constructor() {
+          super();
+          this._prepKeyBindings();
+        }
 
-      _resetKeyEventListeners: function() {
-        this._unlistenKeyEventListeners();
-
-        if (this.isAttached) {
+        connectedCallback() {
+          super.connectedCallback();
+          this._keyBindingsConnected = true;
           this._listenKeyEventListeners();
         }
-      }
-    };
 
-    /* Copy methods from BaseMixin prototype. */
-    Object.getOwnPropertyNames(BaseMixin.prototype).forEach((key) => {
-      if (key != 'constructor') {
-        Polymer.IronA11yKeysBehavior[key] = BaseMixin.prototype[key];
-      }
+        disconnectedCallback() {
+          super.disconnectedCallback();
+          this._keyBindingsConnected = false;
+          this._unlistenKeyEventListeners();
+        }
+
+        _collectKeyBindings() {
+          let keyBindings = [];
+          let proto = Object.getPrototypeOf(this);
+
+          while (proto) {
+            let ctor = proto.constructor;
+            if (!ctor.prototype instanceof HTMLElement) {
+              break;
+            }
+            proto = Object.getPrototypeOf(ctor.prototype);
+
+            if (ctor.hasOwnProperty('keyBindings')) {
+              keyBindings.unshift(ctor.keyBindings);
+            }
+          }
+
+          return keyBindings;
+        }
+
+        _resetKeyEventListeners() {
+          this._unlistenKeyEventListeners();
+
+          if (this._keyBindingsConnected) {
+            this._listenKeyEventListeners();
+          }
+        }
+
+      };
     });
   })();
 </script>
