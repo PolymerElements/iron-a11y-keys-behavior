@@ -445,7 +445,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var eventName;
         var boundKeyHandler;
 
-        while (this._boundKeyHandlers.length) {
+        while (this._boundKeyHandlers && this._boundKeyHandlers.length) {
           // My kingdom for block-scope binding and destructuring assignment..
           keyHandlerTuple = this._boundKeyHandlers.pop();
           keyEventTarget = keyHandlerTuple[0];
