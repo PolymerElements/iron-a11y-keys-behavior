@@ -208,12 +208,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           event: 'keydown'
         };
       }
-      return keyComboString.split('+').reduce(function(parsedKeyCombo, keyComboPart) {
+      var splitKeyComboString  = keyComboString.split('+');
+
+      return splitKeyComboString.reduce(function(parsedKeyCombo, keyComboPart) {
         var eventParts = keyComboPart.split(':');
         var keyName = eventParts[0];
         var event = eventParts[1];
 
-        if (keyName in MODIFIER_KEYS) {
+        // allow modifier keys to be their own event
+        var MoreThanModifier = splitKeyComboString.length > 1;
+        if (MoreThanModifier && keyName in MODIFIER_KEYS) {
           parsedKeyCombo[MODIFIER_KEYS[keyName]] = true;
           parsedKeyCombo.hasModifiers = true;
         } else {
