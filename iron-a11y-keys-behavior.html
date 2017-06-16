@@ -337,6 +337,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Can be used to imperatively add a key binding to the implementing
        * element. This is the imperative equivalent of declaring a keybinding
        * in the `keyBindings` prototype property.
+       *
+       * @param {string} eventString
+       * @param {string} handlerName
        */
       addOwnKeyBinding: function(eventString, handlerName) {
         this._imperativeKeyBindings[eventString] = handlerName;
