@@ -70,34 +70,34 @@ declare namespace Polymer {
      * callback. e.g. `keyBindings: { 'esc': '_onEscPressed'}`
      */
     keyBindings: object;
-    registered(): any;
-    attached(): any;
-    detached(): any;
+    registered(): void;
+    attached(): void;
+    detached(): void;
 
     /**
      * Can be used to imperatively add a key binding to the implementing
      * element. This is the imperative equivalent of declaring a keybinding
      * in the `keyBindings` prototype property.
      */
-    addOwnKeyBinding(eventString: string, handlerName: string): any;
+    addOwnKeyBinding(eventString: string, handlerName: string): void;
 
     /**
      * When called, will remove all imperatively-added key bindings.
      */
-    removeOwnKeyBindings(): any;
+    removeOwnKeyBindings(): void;
 
     /**
      * Returns true if a keyboard event matches `eventString`.
      */
     keyboardEventMatchesKeys(event: KeyboardEvent|null, eventString: string): boolean;
     _collectKeyBindings(): any;
-    _prepKeyBindings(): any;
-    _addKeyBinding(eventString: any, handlerName: any): any;
-    _resetKeyEventListeners(): any;
-    _listenKeyEventListeners(): any;
-    _unlistenKeyEventListeners(): any;
-    _onKeyBindingEvent(keyBindings: any, event: any): any;
-    _triggerKeyHandler(keyCombo: any, handlerName: any, keyboardEvent: any): any;
+    _prepKeyBindings(): void;
+    _addKeyBinding(eventString: any, handlerName: any): void;
+    _resetKeyEventListeners(): void;
+    _listenKeyEventListeners(): void;
+    _unlistenKeyEventListeners(): void;
+    _onKeyBindingEvent(keyBindings: any, event: any): void;
+    _triggerKeyHandler(keyCombo: any, handlerName: any, keyboardEvent: any): void;
   }
 
   const IronA11yKeysBehavior: object;
