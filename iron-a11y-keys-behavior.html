@@ -120,6 +120,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if (lKey == 'multiply') {
           // numpad '*' can map to Multiply on IE/Windows
           validKey = '*';
+        } else if (lKey == 'add') {
+          // numpad '+' can map to Add on IE/Windows
+          validKey = '+';
+        } else if (lKey == 'subtract') {
+          // numpad '-' can map to Subtract on IE/Windows
+          validKey = '-';
+        } else if (lKey == 'divide') {
+          // numpad '/' can map to Divide on IE/Windows
+          validKey = '/';
         } else {
           validKey = lKey;
         }

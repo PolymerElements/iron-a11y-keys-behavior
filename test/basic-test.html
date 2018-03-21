@@ -256,6 +256,12 @@ suite('Polymer.IronA11yKeysBehavior', function() {
         expect(keys.keyboardEventMatchesKeys(event, '+')).to.be.equal(true);
       });
 
+      test('knows that `Add` is the same as `+`', function() {
+        var event = new CustomEvent('keydown');
+        event.key = 'Add';
+        expect(keys.keyboardEventMatchesKeys(event, '+')).to.be.equal(true);
+      });
+
       test('handles `:`', function() {
         var event = new CustomEvent('keydown');
         event.key = ':';
