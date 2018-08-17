@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           behaviors: [KeysTestBehavior],
 
           keyBindings:
-              {'space': '_keyHandler', '@': '_keyHandler', 'esc': '_keyHandler'}
+              {'space': '_keyHandler', '@': '_keyHandler', 'esc': '_keyHandler'},
         });
 
         Polymer({
@@ -105,8 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           keyBindings: {
             'enter': '_keyHandler2',
-            'ctrl+shift+a shift+enter': '_keyHandler'
-          }
+            'ctrl+shift+a shift+enter': '_keyHandler',
+          },
         });
 
         Polymer({
@@ -114,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           behaviors: [KeysTestBehavior],
 
-          keyBindings: {'space:keyup': '_keyHandler'}
+          keyBindings: {'space:keyup': '_keyHandler'},
         });
 
         /** @polymerBehavior */
@@ -125,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           behaviors: [KeysTestBehavior, XA11yBehavior],
 
-          keyBindings: {'enter': '_keyHandler'}
+          keyBindings: {'enter': '_keyHandler'},
         });
 
         Polymer({
@@ -135,8 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           keyBindings: {
             'space a': '_keyHandler',
-            'enter shift+a': '_preventDefaultHandler'
-          }
+            'enter shift+a': '_preventDefaultHandler',
+          },
         });
       });
 
