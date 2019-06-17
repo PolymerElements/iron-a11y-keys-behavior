@@ -311,14 +311,17 @@ export const IronA11yKeysBehavior = {
    */
   keyBindings: {},
 
+  /** @override */
   registered: function() {
     this._prepKeyBindings();
   },
 
+  /** @override */
   attached: function() {
     this._listenKeyEventListeners();
   },
 
+  /** @override */
   detached: function() {
     this._unlistenKeyEventListeners();
   },
